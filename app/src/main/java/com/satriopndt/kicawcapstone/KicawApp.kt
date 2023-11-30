@@ -155,13 +155,13 @@ fun KicawModelPreview(){
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun BottomBarPreview(navController: NavHostController = rememberNavController()) {
-    KicawCapstoneTheme {
-        BottomBar(navController)
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun BottomBarPreview(navController: NavHostController = rememberNavController()) {
+//    KicawCapstoneTheme {
+//        BottomBar(navController)
+//    }
+//}
 
 
 @Preview(showBackground = true)
