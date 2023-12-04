@@ -2,6 +2,7 @@ package com.satriopndt.kicawcapstone.ui.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -20,13 +21,13 @@ import com.satriopndt.kicawcapstone.ui.theme.KicawCapstoneTheme
 
 @Composable
 fun SearchBar(
-    query: String,
-    onQueryChanged: (String) -> Unit,
+//    query: String,
+//    onQueryChanged: (String) -> Unit,
     modifier: Modifier = Modifier,
 ){
     TextField(
-        value = query,
-        onValueChange = onQueryChanged,
+        value = "",
+        onValueChange = {},
         leadingIcon = {
             Icon(imageVector = Icons.Default.Search,
                 contentDescription = "Search"
@@ -37,8 +38,8 @@ fun SearchBar(
         },
         modifier = modifier
             .padding(16.dp)
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(14.dp))
+            .width(295.dp)
+            .clip(RoundedCornerShape(15.dp))
             .testTag("Search")
     )
 }
@@ -47,6 +48,6 @@ fun SearchBar(
 @Composable
 fun SearchBarPreview(){
     KicawCapstoneTheme {
-        SearchBar(query = "", onQueryChanged = {})
+        SearchBar()
     }
 }

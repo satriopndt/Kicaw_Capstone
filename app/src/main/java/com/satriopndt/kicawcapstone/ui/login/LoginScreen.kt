@@ -6,19 +6,21 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.IconButton
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -37,10 +39,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextDecoration
@@ -54,7 +56,7 @@ import com.satriopndt.kicawcapstone.ui.theme.KicawCapstoneTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
-    modifier: Modifier = Modifier.background(Color.White),
+    modifier: Modifier = Modifier
 ) {
 
     Surface(
@@ -119,7 +121,7 @@ fun LoginScreen(
                             .fillMaxWidth()
                             .clip(RoundedCornerShape(10.dp))
                             .rotate(360f)
-                            .padding(30.dp)
+                            .padding(20.dp)
                     )
                     Row(
                         modifier = Modifier
@@ -151,6 +153,7 @@ fun LoginScreen(
                         onValueChange = { newEmail ->
                             email = newEmail
                         },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                         modifier = Modifier
                             .padding(top = 20.dp)
                             .background(
@@ -165,7 +168,7 @@ fun LoginScreen(
                             )
                         },
                         shape = RoundedCornerShape(10.dp),
-                        maxLines = 1,
+                        singleLine = true,
                     )
 
                 }
@@ -199,27 +202,21 @@ fun LoginScreen(
                         },
                         visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
                         trailingIcon = {
-                            val (icon, iconColor) = if (showPassword) {
-                                Pair(
-                                    Icons.Default.Check,
-                                    colorResource(id = R.color.black)
-                                )
-                            } else {
-                                Pair(
-                                    Icons.Default.Check,
-                                    colorResource(id = R.color.black)
-                                )
-                            }
-                            IconButton(onClick = { showPassword = !showPassword }) {
-                                Icon(
-                                    imageVector = icon, contentDescription = "passwordValidation",
-                                    tint = iconColor
-                                )
+                            if (showPassword){
+                                IconButton(onClick = {showPassword = false}) {
+                                    Icon(imageVector = Icons.Filled.Visibility,
+                                        contentDescription = "hide_password")
+                                }
+                            }else {
+                                IconButton(onClick = {showPassword = true}) {
+                                    Icon(imageVector = Icons.Filled.VisibilityOff, contentDescription = "hide_password")
+                                }
                             }
                         },
                         shape = RoundedCornerShape(10.dp),
                         maxLines = 1,
                     )
+
                 }
 
                 Row(
@@ -256,9 +253,29 @@ fun LoginScreen(
                 }
             }
 
+
+
         }
     }
 }
+
+//@Composable
+//fun gradientVertical(
+//    isLinearGradient: Boolean,
+//    colors: List<Color>
+//): Brush{
+//    val endOffset = if (isLinearGradient){
+//        Offset(0f, Float.POSITIVE_INFINITY)
+//    } else{
+//        Offset(Float.POSITIVE_INFINITY, 0f)
+//    }
+//
+//    return Brush.linearGradient(
+//        colors = colors,
+//        start = Offset.Zero,
+//        end = endOffset
+//    )
+//}
 
 @Preview
 @Composable

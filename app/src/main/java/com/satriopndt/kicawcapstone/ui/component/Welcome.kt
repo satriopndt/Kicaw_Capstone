@@ -31,9 +31,9 @@ fun Welcome(
     modifier: Modifier = Modifier
 ){
    Box(modifier = modifier
-       .padding(20.dp)){
+       .padding(16.dp)){
        Image(painter = painterResource(R.drawable.gliter_sky),
-           modifier = Modifier.height(100.dp)
+           modifier = Modifier.height(129.dp)
                .fillMaxWidth()
                .clip(RoundedCornerShape(15.dp)),
            contentDescription = "Banner Welcome",

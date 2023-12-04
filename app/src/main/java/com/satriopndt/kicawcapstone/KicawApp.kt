@@ -28,10 +28,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.satriopndt.kicawcapstone.navigation.NavigationItem
 import com.satriopndt.kicawcapstone.navigation.Screen
+import com.satriopndt.kicawcapstone.ui.component.BottomBar
+import com.satriopndt.kicawcapstone.ui.home.HomeContent
+import com.satriopndt.kicawcapstone.ui.home.HomeScreen
 import com.satriopndt.kicawcapstone.ui.theme.KicawCapstoneTheme
 
 @Composable
@@ -43,90 +47,18 @@ fun KicawApp(
     val scaffoldState = rememberScaffoldState()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-    Scaffold(
-        bottomBar = {
-            if (currentRoute != Screen.DetailBirds.route) {
-                BottomBar(navController)
-            }
-        },
-        modifier = modifier
-    ) { innerPadding ->
-        NavHost(
-            navController = navController,
-            startDestination = Screen.Home.route,
-            modifier = Modifier.padding(innerPadding)
-        ) {
-//            composable(
-//
-//            )
-        }
-
-    }
-}
-
-@Composable
-private fun BottomBar(
-    navController: NavHostController,
-    modifier: Modifier = Modifier
-) {
-
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
-    val navigationItems = listOf(
-        NavigationItem(
-            title = stringResource(R.string.home_screen),
-            icon = ImageVector.vectorResource(R.drawable.ic_home_),
-            screen = Screen.Home
-        ),
-        NavigationItem(
-            title = stringResource(R.string.market_screen),
-            icon = ImageVector.vectorResource(R.drawable.ic_shopping_bag),
-            screen = Screen.Market
-        ),
-    )
-    androidx.compose.material.BottomAppBar(
-        cutoutShape = CircleShape,
-        contentColor = Color.White,
-        backgroundColor = colorResource(id = R.color.white)
-    ) {
-        navigationItems.forEachIndexed { index, navigationItem ->
-            if (index == 1) {
-                NavigationBarItem(selected = false, onClick = { /*TODO*/ }, icon = { /*TODO*/ })
-            }
-            NavigationBarItem(
-                selected = (currentRoute == navigationItem.screen.route),
-                onClick = { /*TODO*/ },
-                icon = {
-                    Icon(
-                        imageVector = navigationItem.icon,
-                        contentDescription = navigationItem.title,
-                        tint = Color.Gray
-                    );
-                },
-                enabled = true
-            )
-        }
-    }
-}
-
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@Composable
-fun KicawModels(
-    modifier: Modifier = Modifier
-) {
-    val navController = rememberNavController()
-    val scaffoldState = rememberScaffoldState()
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
-
     androidx.compose.material.Scaffold(
-        bottomBar = { BottomBar(navController = navController) },
+        bottomBar = {
+                    if (currentRoute != Screen.DetailBirds.route){
+                        BottomBar(navController)
+                    }
+                    },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {},
                 backgroundColor = colorResource(id = R.color.white)
             ) {
-                Icon(
+                androidx.compose.material3.Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.baseline_camera_alt_24),
                     contentDescription = "Scan"
                 )
@@ -135,33 +67,22 @@ fun KicawModels(
         floatingActionButtonPosition = androidx.compose.material.FabPosition.Center,
         isFloatingActionButtonDocked = true,
         scaffoldState = scaffoldState
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-
+    ) { innerPadding ->
+        NavHost(
+            navController = navController,
+            startDestination = Screen.Home.route,
+            modifier = Modifier.padding(innerPadding)
         ) {
-            
+            composable(Screen.Home.route) {
+                HomeScreen(
+
+                )
+            }
         }
+
+
     }
 }
-
-@Preview
-@Composable
-fun KicawModelPreview(){
-    KicawCapstoneTheme {
-        KicawModels()
-    }
-}
-
-//@Preview(showBackground = true)
-//@Composable
-//fun BottomBarPreview(navController: NavHostController = rememberNavController()) {
-//    KicawCapstoneTheme {
-//        BottomBar(navController)
-//    }
-//}
 
 
 @Preview(showBackground = true)
